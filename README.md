@@ -23,8 +23,11 @@ De datafile kan opnieuw worden ingeladen in de 'Bugel-studio-template' waarop ve
 Hoe te downloaden
 
 Ga naar het bestand in de repository "bugel_studio_sjabloon-geavanceerd2_0-4.html".
+
 Click op de Raw button (bovenzijde-rechts van het venster).
+
 Rechts-click de pagina → Save Page As / Save As → bewaar als .html op de computer.
+
 (Alleen "Save As" op het normale GitHub file venster bewaart de GitHub UI page, niet de Raw file — Raw is noodzakelijk.)
 
 <img width="1945" height="1763" alt="Screenshot 2026-08-02 Bugel Oefenstudio" src="https://github.com/user-attachments/assets/c74a4671-2dfa-43ab-9ad3-98413642a902" />

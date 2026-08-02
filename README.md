@@ -1,7 +1,7 @@
 
-Een eenvoudig oefensjabloon voor Bügel-spelers ("Flügelhorn) waarmee een musicus zelfstandig korte (delen uit) muziekstukken kan invoeren.
+Een eenvoudig oefensjabloon voor Bügel-spelers ("Flügelhorn) waarmee een musicus zelfstandig korte (delen uit) muziekstukken kan invoeren, downloaden en oefenen als speler.
 
-Gebruik van het sjabloon
+**Gebruik van het sjabloon**
 
 De gebruiker vult het sjabloon (' Bugel oefenstudio") in via het paneel instellingen; o.a. tempo, maatsoort, toonsoort. 
 Er kan worden gekozen om de grepen op de bugel te tonen onder elke noot (gebaseerd op een standaard standaard B♭-bugel
@@ -10,25 +10,25 @@ Het sjabloon toont de notatiewijze voor de noteninvoer. De invoer biedt mogelijk
 'rust:#tellen' ; koppelboog tussen noten; accent; dynamiek en herhalingen.
 Na invoer kan de muziek worden afgespeeld en het resultaat als speler (.html) en data-sjabloon (.json) worden geexporteerd
 
-Speler
+**Speler**
 
 Om te oefenen kan vervolgens de speler, met het ingevoerde muziekstuk, worden afgespeeld. 
 De instellingen van de speler geven de mogelijkheid om partijen individueel of gezamenlijk af te spelen; een metronoom toe te voegen; te starten met intellen;
 het ritme aan te passen (op basis van de instellingen van het oorspronkelijke template)
 
-Datafile/data-sjabloon
+**Datafile/data-sjabloon**
 
 De datafile kan opnieuw worden ingeladen in de 'Bugel-studio-template' waarop vervolgens aanvullingen kunnen worden toegevoegd.
 
-Hoe te downloaden
+**Hoe te downloaden**
 
-Ga naar het bestand in de repository "bugel_studio_sjabloon-geavanceerd2_0-4.html".
+1. Ga naar het bestand in de repository "bugel_studio_sjabloon-geavanceerd2_0-4.html".
 
-Click op de Raw button (bovenzijde-rechts van het venster).
+2. Click op de Raw button (bovenzijde-rechts van het venster).
 
-Rechts-click de pagina → Save Page As / Save As → bewaar als .html op de computer.
+3. Rechts-click de pagina → Save Page As / Save As → bewaar als .html op de computer.
 
-(Alleen "Save As" op het normale GitHub file venster bewaart de GitHub UI page, niet de Raw file — Raw is noodzakelijk.)
+3.a(Alleen "Save As" op het normale GitHub file venster bewaart de GitHub UI page, niet de Raw file — Raw is noodzakelijk.)
 
 <img width="1945" height="1763" alt="Screenshot 2026-08-02 Bugel Oefenstudio" src="https://github.com/user-attachments/assets/c74a4671-2dfa-43ab-9ad3-98413642a902" />
 

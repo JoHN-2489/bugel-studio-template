@@ -1,3 +1,4 @@
+
 Een eenvoudig oefensjabloon voor Bügel-spelers ("Flügelhorn) waarmee een musicus zelfstandig korte (delen uit) muziekstukken kan invoeren.
 
 Gebruik van het sjabloon
@@ -19,9 +20,7 @@ Datafile/data-sjabloon
 
 De datafile kan opnieuw worden ingeladen in de 'Bugel-studio-template' waarop vervolgens aanvullingen kunnen worden toegevoegd.
 
-Claude
-
-Het project is gerealiseerd met Anthropic - Claude
+<img width="1945" height="1763" alt="Screenshot 2026-08-02 Bugel Oefenstudio" src="https://github.com/user-attachments/assets/c74a4671-2dfa-43ab-9ad3-98413642a902" />
 
 Creative Commons licentie
 

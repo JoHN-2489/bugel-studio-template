@@ -1073,6 +1073,16 @@ function applyNotes(pi){const ta=document.querySelector(`[data-notesin="${pi}"]`
   const nNotes=res.notes.filter(n=>!n.marker).length,nMarks=res.notes.length-nNotes;
   setStatus(pi,`${nNotes} noten${nMarks?` + ${nMarks} tekens`:""} toegepast (${Math.max(1,Math.ceil(res.notes.reduce((s,n)=>s+(n.dur||0),0)/BEATS_PER_BAR))} maten).`,"ok");}
 
+// Commits every part's "Noten invoeren" textarea before save/export, so unclicked "Toepassen" edits aren't silently dropped.
+function applyAllNotes(){let ok=true,errPi=null;
+  parts.forEach((p,pi)=>{const ta=document.querySelector(`[data-notesin="${pi}"]`);if(!ta)return;
+    const res=parseNotes(ta.value);
+    if(res.error){ok=false;if(errPi==null)errPi=pi;setStatus(pi,`Kan “${res.error}” niet lezen — controleer de notatie (bv. C5:1).`,"err");return;}
+    p.notes=res.notes;
+    const nNotes=res.notes.filter(n=>!n.marker).length,nMarks=res.notes.length-nNotes;
+    setStatus(pi,`${nNotes} noten${nMarks?` + ${nMarks} tekens`:""} toegepast (${Math.max(1,Math.ceil(res.notes.reduce((s,n)=>s+(n.dur||0),0)/BEATS_PER_BAR))} maten).`,"ok");});
+  if(state.playing)stopTransport();render();return{ok,errPi};}
+
 async function previewNote(pi,i){const nn=parts[pi].notes[i];if(nn.midi==null)return;const a=await ensureAudio();
   voiceFor(pi).triggerAttackRelease(Tone.Frequency(nn.midi,"midi"),"8n",undefined,0.8);
   const el=document.querySelector(`.rib-note[data-p="${pi}"][data-i="${i}"]`);el.classList.add('playing');setTimeout(()=>el.classList.remove('playing'),320);}
@@ -1120,6 +1130,7 @@ function loadBundle(obj){
   state.select=0;if(state.playing)stopTransport();syncSetupInputs();renderHeader();render();
 }
 $('exporthtml').onclick=()=>{
+  if(!applyAllNotes().ok){dstatus("Kon niet exporteren: controleer de foutieve noteninvoer hierboven.","err");return;}
   let tpl=document.getElementById('player-template').textContent;
   tpl=tpl.replace(/<\\\/script>/g,'<\/script>');               // restore closing tags
   const json=JSON.stringify({config,parts}).replace(/</g,'\\u003c'); // safe embed
@@ -1130,7 +1141,9 @@ $('exporthtml').onclick=()=>{
   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000);
   dstatus("Speler-bestand geëxporteerd ✓ — dit geef je aan de spelers.","ok");
 };
-$('export').onclick=()=>{const blob=new Blob([JSON.stringify({v:1,config,parts},null,2)],{type:"application/json"});
+$('export').onclick=()=>{
+  if(!applyAllNotes().ok){dstatus("Kon niet opslaan: controleer de foutieve noteninvoer hierboven.","err");return;}
+  const blob=new Blob([JSON.stringify({v:1,config,parts},null,2)],{type:"application/json"});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download=(config.title||"oefenstudio").replace(/[^\w\-]+/g,"_").toLowerCase()+".json";
   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000);};
@@ -1138,7 +1151,8 @@ $('import').onclick=()=>$('importfile').click();
 $('importfile').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();
   rd.onload=()=>{try{loadBundle(JSON.parse(rd.result));dstatus("Geïmporteerd ✓","ok");}catch(err){dstatus("Kon bestand niet lezen: "+err.message,"err");}};
   rd.readAsText(f);e.target.value="";};
-$('copydata').onclick=async()=>{const t=bundle();$('datatext').value=t;try{await navigator.clipboard.writeText(t);dstatus("Naar klembord gekopieerd ✓","ok");}catch(_){$('datatext').select();dstatus("Selecteer de tekst en kopieer met Ctrl/Cmd+C.","ok");}};
+$('copydata').onclick=async()=>{if(!applyAllNotes().ok){dstatus("Kon niet kopiëren: controleer de foutieve noteninvoer hierboven.","err");return;}
+  const t=bundle();$('datatext').value=t;try{await navigator.clipboard.writeText(t);dstatus("Naar klembord gekopieerd ✓","ok");}catch(_){$('datatext').select();dstatus("Selecteer de tekst en kopieer met Ctrl/Cmd+C.","ok");}};
 $('loaddata').onclick=()=>{try{loadBundle(JSON.parse($('datatext').value));dstatus("Geladen uit tekst ✓","ok");}catch(err){dstatus("Ongeldige data: "+err.message,"err");}};
 $('reset').onclick=()=>{if(!confirm("Alles wissen en opnieuw beginnen?"))return;
   Object.assign(config,{title:"Naamloos stuk",subtitle:"",composer:"",keySig:0,beatsPerBar:4,tempo:72,tempoMax:160,perfNote:"",showFingerings:true});
